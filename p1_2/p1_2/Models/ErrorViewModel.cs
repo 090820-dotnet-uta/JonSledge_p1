@@ -1,4 +1,3 @@
-using System;
 
 namespace p1_2.Models
 {

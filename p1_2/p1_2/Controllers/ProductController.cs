@@ -85,6 +85,11 @@ namespace p1_2.Controllers
       var inv = _db.Inventories.FirstOrDefault(i => i.ProductId == id && i.StoreId == (int)_cache.Get("StoreId"));
       Product prod = _db.Products.FirstOrDefault(p => p.ProductId == id);
 
+      if (prod == null)
+      {
+        return NotFound();
+      }
+
       var x = shoppingCartProducts.Where(sh => sh.StoreId == (int)_cache.Get("StoreId") && sh.ProductId == id).ToList();
       ProductView productView = new ProductView();
       if (x.Count > 0)
@@ -108,11 +113,6 @@ namespace p1_2.Controllers
         productView.Title = prod.Title;
         productView.IsInCart = (x.Count() == 2);
 
-      }
-
-      if (prod == null)
-      {
-        return NotFound();
       }
 
       return View(productView);

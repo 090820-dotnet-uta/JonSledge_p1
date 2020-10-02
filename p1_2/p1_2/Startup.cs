@@ -26,7 +26,7 @@ namespace p1_2
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<BookopolisDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
 
       services.AddMemoryCache();
       services.AddControllersWithViews();

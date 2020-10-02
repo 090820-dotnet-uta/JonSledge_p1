@@ -33,12 +33,7 @@ steps:
   inputs:
     command: 'build'
     projects: './p1_2/p1_2/p1_2.csproj'
-
-- task: SonarCloudAnalyze@1
-
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+    arguments: '--configuration $(buildConfiguration)'
 
 # - task: VSBuild@1
 #   inputs:
@@ -51,6 +46,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
 
 - task: DotNetCoreCLI@2
   inputs:

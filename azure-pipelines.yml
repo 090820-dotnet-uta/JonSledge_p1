@@ -31,7 +31,6 @@ steps:
     extraProperties: 
       sonar.exclusions=**/obj/**,**/*.dll
 
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'

@@ -37,3 +37,18 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(dfd44896-aad0-4c42-be8a-2aa3c1d10490)'
+    appType: 'webApp'
+    appName: 'Bookopolis'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'

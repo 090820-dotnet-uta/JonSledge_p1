@@ -28,6 +28,8 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'jonsledge39_JonSledge_p1'
     projectName: 'JonSledge_p1'
+    extraProperties: 
+      sonar.exclusions=**/obj/**,**/*.dll
 
 - task: DotNetCoreCLI@2
   inputs:

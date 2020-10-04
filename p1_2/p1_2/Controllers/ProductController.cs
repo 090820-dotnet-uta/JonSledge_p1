@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using p1_2.Data;
 using p1_2.Models;
@@ -29,7 +28,7 @@ namespace p1_2.Controllers
     }
     public IActionResult Index(int? id)
     {
-      if (Util.IsLoggedIn(_cache))
+      if (!Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
@@ -52,7 +51,7 @@ namespace p1_2.Controllers
 
     public IActionResult Details(int? id)
     {
-      if (Util.IsLoggedIn(_cache))
+      if (!Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
@@ -70,36 +69,24 @@ namespace p1_2.Controllers
       }
 
       List<ShoppingCart> shoppingCartInvs = DbManipulation.GetInventoryOfShoppingCart(shoppingCartProducts, (int)_cache.Get("StoreId"), id);
-
       ProductView productView = DbManipulation.CreateProductView(shoppingCartInvs, inv, prod);
-
 
       return View(productView);
     }
 
     public IActionResult AddToCart(ProductView p)
     {
-      int temp = (int)_cache.Get("StoreId");
+      int id = (int)_cache.Get("StoreId");
       Store store = (Store)_cache.Get("Store");
-      p.Amount--;
-      ShoppingCart sh = new ShoppingCart()
-      {
-        StockAmount = p.Amount,
-        Author = p.Author,
-        Title = p.Title,
-        Price = p.Price,
-        StoreId = temp,
-        ProductId = p.ProductId,
-        State = store.State
-      };
-      var inv = _db.Inventories.FirstOrDefault(i => i.ProductId == sh.ProductId && i.StoreId == (int)_cache.Get("StoreId"));
 
-      sh.Inventory = inv;
-      shoppingCartProducts.Add(sh);
+      ShoppingCart shoppingCart = DbManipulation.CreateShoppingCart(p, id, store.State);
+      shoppingCart.Inventory = DbManipulation.GetInventoryOfStoreProduct(_db, shoppingCart.StoreId, shoppingCart.ProductId);
+
+      shoppingCartProducts.Add(shoppingCart);
 
       _cache.Set("shoppingCart", shoppingCartProducts);
 
-      return RedirectToAction("Index", "Store");
+      return RedirectToAction("Index", "Product", new { id });
     }
 
   }

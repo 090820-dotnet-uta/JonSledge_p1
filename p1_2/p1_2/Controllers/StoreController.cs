@@ -29,7 +29,7 @@ namespace p1_2.Controllers
 
     public IActionResult Index()
     {
-      if (Util.IsLoggedIn(_cache))
+      if (!Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }

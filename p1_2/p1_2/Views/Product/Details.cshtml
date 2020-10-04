@@ -34,10 +34,6 @@
     {
       <button class="btn btn-secondary btn-lg a-none" type="submit" disabled>Out of stock</button>
     }
-    else if (Model.IsInCart)
-    {
-      <button class="btn btn-secondary btn-lg a-none" type="submit" disabled>In Cart</button>
-    }
     else
     {
       <button class="btn btn-success btn-lg a-none" type="submit">@Html.ActionLink("Add To Cart", "AddToCart", "Product", @Model)</button>

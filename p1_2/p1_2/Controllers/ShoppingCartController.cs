@@ -26,18 +26,37 @@ namespace p1_2.Controllers
       }
     }
 
+    public IActionResult Index()
+    {
+      if (!Util.IsLoggedIn(_cache))
+      {
+        return RedirectToAction("Login", "Customer");
+      }
+      return View(shoppingCart);
+    }
+
     public IActionResult Delete(ShoppingCart sh)
     {
-      ShoppingCart x = shoppingCart.Find(s => s.ProductId == sh.ProductId && s.StoreId == sh.StoreId);
-      shoppingCart.Remove(x);
-      _cache.Set("shoppingCart", shoppingCart);
-      return RedirectToAction("Index", "Store");
-
+      if (Util.GetShoppingCartStoreProducts(shoppingCart, sh).Count() == 1)
+      {
+        ShoppingCart shop = Util.GetShoppingCartStoreProducts(shoppingCart, sh).FirstOrDefault();
+        shoppingCart.Remove(shop);
+        _cache.Set("shoppingCart", shoppingCart);
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        List<ShoppingCart> shops = Util.GetShoppingCartStoreProducts(shoppingCart, sh);
+        ShoppingCart shopToRemove = Util.FindAndRemoveShoppingCart(shops);
+        shoppingCart.Remove(shopToRemove);
+        _cache.Set("shoppingCart", shoppingCart);
+        return RedirectToAction("Index");
+      }
     }
 
     public IActionResult Checkout()
     {
-      if (Util.IsLoggedIn(_cache))
+      if (!Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
@@ -117,13 +136,5 @@ namespace p1_2.Controllers
 
     }
 
-    public IActionResult Index()
-    {
-      if (Util.IsLoggedIn(_cache))
-      {
-        return RedirectToAction("Login", "Customer");
-      }
-      return View(shoppingCart);
-    }
   }
 }

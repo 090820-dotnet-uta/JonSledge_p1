@@ -31,7 +31,7 @@
   <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content bg-dark">
-        <div class="modal-header">
+        <div class="modal-header border-bottom border-secondary">
           <h5 class="modal-title" id="staticBackdropLabel">Store Locations</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -41,19 +41,19 @@
           <ul class="list-group">
             @foreach (var item in Model.Stores)
             {
-              <li onclick="HandleStoreClick(@item.StoreId)" class="list-group-item list-group-item bg-secondary my-1 py-0 pointer hover-darker">
+              <li onclick="HandleStoreClick(@item.StoreId)" class="list-group-item list-group-item bg-dark border border-secondary my-1 py-0 pointer hover-darker">
                 <a class="a-none" asp-action="SelectStore" asp-controller="Order" asp-route-id="@item.StoreId">
                   <div class="row py-3">
                     <div class="col d-flex align-items-center">
-                      <h4 class="m-0 d-flex">
-                        <span class="badge badge-dark">@item.State</span>
-                      </h4>
+                      <h5 class="m-0 d-flex">
+                        @item.State
+                      </h5>
 
                     </div>
                     <div class="col d-flex align-items-center">
-                      <h4 class="m-0 d-flex">
-                        <span class="badge badge-dark">@item.City</span>
-                      </h4>
+                      <h5 class="m-0 d-flex">
+                        @item.City
+                      </h5>
                     </div>
                   </div>
                 </a>
@@ -62,7 +62,7 @@
           </ul>
 
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer border-bottom border-secondary">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -71,17 +71,17 @@
 
   <ul class="list-group">
 
-    <li class="list-group-item list-group-item bg-secondary my-1">
+    <li class="list-group-item list-group-item bg-secondary shadow-lg my-1">
       <div class="row">
         <div class="col d-flex align-items-center">
           <h4 class="m-0 d-flex">
-            <span class="badge badge-dark">Order Id</span>
+            <span class="badge badge-dark border border-dark shadow-lg">ID</span>
           </h4>
 
         </div>
         <div class="col d-flex align-items-center">
           <h4 class="m-0 d-flex">
-            <span class="badge badge-dark">Order Date</span>
+            <span class="badge badge-dark border border-dark shadow-lg">Date</span>
           </h4>
 
         </div>
@@ -99,17 +99,21 @@
     {
       @foreach (var item in Model.Orders)
       {
-        <li class="list-group-item list-group-item-action list-group-item bg-secondary my-1 pointer">
+        <li class="list-group-item list-group-item-action list-group-item bg-dark border border-secondary my-1 pointer hover-darker">
           <div class="row">
             <div class="col d-flex align-items-center">
               <h4 class="m-0 d-flex">
-                <span class="badge badge-dark">@item.OrderId</span>
+                <span class="badge badge-dark border border-secondary">
+                  @item.OrderId
+                </span>
               </h4>
 
             </div>
             <div class="col d-flex align-items-center">
               <h4 class="m-0 d-flex">
-                <span class="badge badge-dark">@item.TimeOfOrder</span>
+                <span class="badge badge-dark border border-secondary">
+                  @item.TimeOfOrder
+                </span>
               </h4>
             </div>
           </div>
@@ -136,17 +140,13 @@
   }
 
   .hover-darker:hover {
-    border: 1px solid white;
+    border: 1px solid #28a745 !important;
+    background-color: #394046 !important;
   }
 
-  .hover-darker:active {
-    transition: all 0.1s ease-out;
-    transform: scale(.98);
-  }
-
-    .hover-darker:active::after {
-      transition: all 0.1s ease-in;
-      transform: scale(1.06);
+    .hover-darker:hover span {
+      border: 1px solid #28a745 !important;
+      background-color: #394046 !important;
     }
 </style>
 

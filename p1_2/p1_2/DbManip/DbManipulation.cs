@@ -1,9 +1,7 @@
 ﻿using p1_2.Data;
 using p1_2.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace p1_2.DbManip
 {
@@ -91,8 +89,12 @@ namespace p1_2.DbManip
       return EProdViews;
     }
 
+    public static IEnumerable<Inventory> GetInventories(BookopolisDbContext context)
+      => context.Inventories;
+
     public static List<ShoppingCart> GetInventoryOfShoppingCart(List<ShoppingCart> shoppingCartProducts, int? storeId, int? productId)
       => shoppingCartProducts.Where(sh => sh.StoreId == storeId && sh.ProductId == productId).ToList();
+
     public static ProductView CreateProductView(List<ShoppingCart> shoppingCartInvs, Inventory inv, Product prod)
     {
       ProductView productView = new ProductView();
@@ -107,5 +109,23 @@ namespace p1_2.DbManip
 
       return productView;
     }
+
+    public static ShoppingCart CreateShoppingCart(ProductView productView, int storeId, string state)
+    {
+      productView.Amount--;
+      ShoppingCart sh = new ShoppingCart()
+      {
+        StockAmount = productView.Amount,
+        Author = productView.Author,
+        Title = productView.Title,
+        Price = productView.Price,
+        StoreId = storeId,
+        ProductId = productView.ProductId,
+        State = state
+      };
+
+      return sh;
+    }
+
   }
 }

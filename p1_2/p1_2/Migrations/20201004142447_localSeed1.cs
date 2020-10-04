@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace p1_2.Migrations
 {
-    public partial class initialazuredb : Migration
+    public partial class localSeed1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,9 @@ namespace p1_2.Migrations
                 {
                     CustomerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 20, nullable: false),
+                    LastName = table.Column<string>(maxLength: 20, nullable: false),
+                    UserName = table.Column<string>(maxLength: 20, nullable: false),
                     Password = table.Column<string>(nullable: false)
                 },
                 constraints: table =>

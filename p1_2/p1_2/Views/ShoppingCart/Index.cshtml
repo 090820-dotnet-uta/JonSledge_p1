@@ -14,7 +14,7 @@
     {
       <div class="col-lg-4">
 
-        <div class="card bg-dark border border-secondary rounded shadow p-3 my-1 text-center hover">
+        <div class="card bg-dark border border-secondary rounded shadow p-3 my-1 text-center">
           <h3 class="text-light">@Html.DisplayFor(modelItem => item.State)</h3>
           <h4 class="text-light">@Html.DisplayFor(modelItem => item.Title)</h4>
           <h5 class="text-light">@Html.DisplayFor(modelItem => item.Author)</h5>
@@ -44,21 +44,6 @@
     .a-none a {
       text-decoration: none;
       color: inherit;
-    }
-
-  .hover:hover {
-    transition: all 0.1s ease-in;
-    transform: scale(1.02);
-  }
-
-  .hover:active {
-    transition: all 0.1s ease-out;
-    transform: scale(1.01);
-  }
-
-    .hover:active::after {
-      transition: all 0.1s ease-in;
-      transform: scale(1.1);
     }
 </style>
 

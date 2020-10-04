@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -61,5 +62,47 @@ namespace p1_2.Controllers
 
       return View("Login");
     }
+
+    public IActionResult SearchCustomers(CustomerView customerV)
+    {
+      //Customer loggedInCustomer = (Customer)_cache.Get("LoggedInCustomer");
+
+      if (customerV.FirstName == null)
+      {
+        List<Customer> customers = new List<Customer>();
+        CustomerView customerView = new CustomerView();
+        customerView.Customers = customers;
+
+        return View(customerView);
+      }
+      else
+      {
+        var customers = _db.Customers.Where(c => c.FirstName == customerV.FirstName).ToList();
+        CustomerView customerView = new CustomerView();
+        customerView.Customers = customers;
+
+        return View(customerView);
+      }
+
+    }
+
+    [HttpPost]
+    public IActionResult DisplayCustomers([Bind("FirstName")] Customer customer)
+    {
+
+      CustomerView customerView = new CustomerView();
+      customerView.FirstName = customer.FirstName;
+
+      return RedirectToAction("SearchCustomers", customerView);
+
+    }
+
+    public JsonResult GetNames()
+    {
+      List<string> names = _db.Customers.Select(c => c.FirstName).ToList();
+
+      return Json(names);
+    }
+
   }
 }

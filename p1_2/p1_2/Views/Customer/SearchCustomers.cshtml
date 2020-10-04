@@ -1,0 +1,26 @@
+﻿@model p1_2.Models.CustomerView
+
+@{
+  ViewData["Title"] = "Search Customer";
+  Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+
+
+
+<div class="container">
+
+  <div class="row justify-content-center">
+    @foreach (var item in Model.Customers)
+    {
+      <div class="col-lg-4 bg-dark border border-secondary rounded shadow py-3 text-center">
+        <h1 class="text-light">@Html.DisplayFor(model => item.FirstName)</h1>
+        <h3 class="text-light">@Html.DisplayFor(model => item.UserName)</h3>
+      </div>
+    }
+  </div>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  }*@

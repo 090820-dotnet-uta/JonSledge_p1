@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using p1_2.Data;
+using p1_2.Utils;
 using p1_2.Models;
 
 namespace p1_2.Controllers
@@ -36,7 +37,7 @@ namespace p1_2.Controllers
 
     public IActionResult Checkout()
     {
-      if (Util.Util.IsLoggedIn(_cache))
+      if (Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
@@ -118,7 +119,7 @@ namespace p1_2.Controllers
 
     public IActionResult Index()
     {
-      if (Util.Util.IsLoggedIn(_cache))
+      if (Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }

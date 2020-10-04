@@ -10,8 +10,8 @@ using p1_2.Data;
 namespace p1_2.Migrations
 {
     [DbContext(typeof(BookopolisDbContext))]
-    [Migration("20201001164310_initialazuredb")]
-    partial class initialazuredb
+    [Migration("20201004142447_localSeed1")]
+    partial class localSeed1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,11 +30,13 @@ namespace p1_2.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -42,7 +44,8 @@ namespace p1_2.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.HasKey("CustomerId");
 

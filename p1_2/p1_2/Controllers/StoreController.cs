@@ -3,7 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using p1_2.Data;
+using p1_2.Utils;
 using p1_2.Models;
+using p1_2.DbManip;
 
 namespace p1_2.Controllers
 {
@@ -22,18 +24,17 @@ namespace p1_2.Controllers
     {
       //send username to local store GET request here!
       string s = _cache.Get("UserName").ToString();
-
       return new JsonResult(s);
     }
 
     public IActionResult Index()
     {
-      if (Util.Util.IsLoggedIn(_cache))
+      if (Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
 
-      IEnumerable<Store> storeList = _db.Stores;
+      IEnumerable<Store> storeList = DbManipulation.GetStores(_db);
       return View(storeList);
     }
 
@@ -49,9 +50,8 @@ namespace p1_2.Controllers
       {
         return NotFound();
       }
-      Store store = _db.Stores.FirstOrDefault(s => s.StoreId == id);
 
-      if (store == null)
+      if (!DbManipulation.IsStore(_db, id))
       {
         return NotFound();
       }

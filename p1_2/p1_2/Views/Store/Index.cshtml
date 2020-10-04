@@ -14,7 +14,7 @@
     {
       <div class="col-lg-6">
         <a class="a-none" asp-controller="Store" asp-action="StoreProducts" asp-route-id="@item.StoreId">
-          <div class="card bg-secondary p-3 my-1 text-center hover">
+          <div class="card p-3 my-1 bg-dark border border-secondary rounded shadow text-center hover">
             <h4 class="text-light">@Html.DisplayFor(modelItem => item.State)</h4>
             <h5 class="text-light">@Html.DisplayFor(modelItem => item.City)</h5>
             <h5 class="text-light">@Html.DisplayFor(modelItem => item.StreetAddress)</h5>
@@ -37,19 +37,9 @@
   }
 
   .hover:hover {
-    transition: all 0.1s ease-in;
-    transform: scale(1.02);
+    border: 1px solid #28a745 !important;
+    background-color: #394046 !important;
   }
-
-  .hover:active {
-    transition: all 0.1s ease-out;
-    transform: scale(1.01);
-  }
-
-    .hover:active::after {
-      transition: all 0.1s ease-in;
-      transform: scale(1.1);
-    }
 </style>
 
 

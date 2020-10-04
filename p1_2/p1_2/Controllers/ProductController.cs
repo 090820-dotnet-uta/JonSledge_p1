@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using p1_2.Data;
 using p1_2.Models;
+using p1_2.Utils;
 using Microsoft.Extensions.Caching.Memory;
+using p1_2.DbManip;
 
 namespace p1_2.Controllers
 {
@@ -27,53 +29,30 @@ namespace p1_2.Controllers
     }
     public IActionResult Index(int? id)
     {
-      if (Util.Util.IsLoggedIn(_cache))
+      if (Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
 
-      List<ShoppingCart> x = (List<ShoppingCart>)_cache.Get("shoppingCart");
+      List<ShoppingCart> shoppingCartProds = (List<ShoppingCart>)_cache.Get("shoppingCart");
 
       _cache.Set("StoreId", id);
-      var store = _db.Stores.FirstOrDefault(s => s.StoreId == id);
+      Store store = DbManipulation.GetStore(_db, id);
       _cache.Set("Store", store);
-      var inv = _db.Inventories.Where(i => i.StoreId == id).OrderBy(pid => pid.ProductId).ToList();
-      var prodList = _db.Products.ToList();
-      List<ProductView> prodViews = new List<ProductView>();
 
-      for (int i = 0; i < x.Count; i++)
-      {
-        for (int j = 0; j < inv.Count; j++)
-        {
-          if (x[i].Inventory.InventoryId == inv[j].InventoryId)
-          {
-            inv[j].Amount = x[i].StockAmount;
-          }
-        }
-      }
+      List<Inventory> inventories = DbManipulation.GetInventoriesOfStore(_db, id).OrderBy(pid => pid.ProductId).ToList();
+      List<Product> prodList = DbManipulation.GetProducts(_db).ToList();
 
-      for (int i = 0; i < inv.Count; i++)
-      {
-        ProductView productView = new ProductView()
-        {
-          Amount = inv[i].Amount,
-          Author = prodList[i].Author,
-          Description = prodList[i].Description,
-          Price = prodList[i].Price,
-          ProductId = prodList[i].ProductId,
-          Title = prodList[i].Title
-        };
-        prodViews.Add(productView);
-      }
+      DbManipulation.SetShoppingCartStock(shoppingCartProds, inventories);
+      IEnumerable<ProductView> EProdViews = DbManipulation.CreateProductViews(prodList, inventories);
 
-      IEnumerable<ProductView> EProdViews = prodViews;
 
       return View(EProdViews);
     }
 
     public IActionResult Details(int? id)
     {
-      if (Util.Util.IsLoggedIn(_cache))
+      if (Util.IsLoggedIn(_cache))
       {
         return RedirectToAction("Login", "Customer");
       }
@@ -82,38 +61,18 @@ namespace p1_2.Controllers
         return NotFound();
       }
 
-      var inv = _db.Inventories.FirstOrDefault(i => i.ProductId == id && i.StoreId == (int)_cache.Get("StoreId"));
-      Product prod = _db.Products.FirstOrDefault(p => p.ProductId == id);
+      Inventory inv = DbManipulation.GetInventoryOfStoreProduct(_db, (int)_cache.Get("StoreId"), id);
+      Product prod = DbManipulation.GetProduct(_db, id);
 
       if (prod == null)
       {
         return NotFound();
       }
 
-      var x = shoppingCartProducts.Where(sh => sh.StoreId == (int)_cache.Get("StoreId") && sh.ProductId == id).ToList();
-      ProductView productView = new ProductView();
-      if (x.Count > 0)
-      {
-        productView.Amount = x[x.Count - 1].StockAmount;
-        productView.Author = prod.Author;
-        productView.Description = prod.Description;
-        productView.Price = prod.Price;
-        productView.ProductId = prod.ProductId;
-        productView.Title = prod.Title;
-        productView.IsInCart = (x.Count() == 2);
+      List<ShoppingCart> shoppingCartInvs = DbManipulation.GetInventoryOfShoppingCart(shoppingCartProducts, (int)_cache.Get("StoreId"), id);
 
-      }
-      else
-      {
-        productView.Amount = inv.Amount;
-        productView.Author = prod.Author;
-        productView.Description = prod.Description;
-        productView.Price = prod.Price;
-        productView.ProductId = prod.ProductId;
-        productView.Title = prod.Title;
-        productView.IsInCart = (x.Count() == 2);
+      ProductView productView = DbManipulation.CreateProductView(shoppingCartInvs, inv, prod);
 
-      }
 
       return View(productView);
     }

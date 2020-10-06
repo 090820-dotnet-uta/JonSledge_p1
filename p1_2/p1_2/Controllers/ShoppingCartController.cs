@@ -38,7 +38,7 @@ namespace p1_2.Controllers
 
     public IActionResult Delete(ShoppingCart sh)
     {
-      if (Util.GetShoppingCartStoreProducts(shoppingCart, sh).Count() == 1)
+      if (Util.GetShoppingCartStoreProducts(shoppingCart, sh).Count == 1)
       {
         ShoppingCart shop = Util.GetShoppingCartStoreProducts(shoppingCart, sh).FirstOrDefault();
         shoppingCart.Remove(shop);
@@ -74,16 +74,13 @@ namespace p1_2.Controllers
     {
       Customer tempCust = (Customer)_cache.Get("LoggedInCustomer");
       Customer customer = DbManipulation.GetCustomer(_db, tempCust.CustomerId);
-      List<CustomerAddress> customerAddresses1 = DbManipulation.GetCustomerAddresses(_db, tempCust.CustomerId).ToList();
+      List<CustomerAddress> customerAddresses = DbManipulation.GetCustomerAddresses(_db, tempCust.CustomerId).ToList();
 
 
-      if (customerAddresses1.Count > 0)
+      if (customerAddresses.Count > 0)
       {
-        customerAddress = Util.CheckForRepeatAddress(customerAddresses1, customerAddress);
+        customerAddress = Util.CheckForRepeatAddress(customerAddresses, customerAddress);
       }
-
-      List<CustomerAddress> customerAddresses = new List<CustomerAddress>();
-      customerAddresses = customerAddresses1;
 
       Dictionary<int, int> myDict = Util.GetShoppingCartInventoryAmounts(shoppingCart);
       DbManipulation.UpdateInventoryAmounts(_db, myDict);
@@ -92,7 +89,7 @@ namespace p1_2.Controllers
 
       Order order = new Order();
       order.TimeOfOrder = DateTime.Now;
-      order.OrderProducts = viewModel.CreateOrderProducts(shoppingCart, customer, customerAddress);
+      order.OrderProducts = Util.CreateOrderProducts(shoppingCart, customer, customerAddress);
       order.Total = shoppingCart.Sum(sh => sh.Price);
       List<Order> orders = new List<Order>();
       orders.Add(order);

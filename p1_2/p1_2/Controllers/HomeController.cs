@@ -31,13 +31,6 @@ namespace p1_2.Controllers
       return View("Privacy");
     }
 
-    [HttpPost]
-    public IActionResult HandlePost([FromBody] Customer customer)
-    {
-      var x = customer;
-      return RedirectToAction("Privacy");
-    }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace p1_2.DbManip
 {
-  public class DbManipulation
+  public static class DbManipulation
   {
 
     public static void SeedDb(BookopolisDbContext context)

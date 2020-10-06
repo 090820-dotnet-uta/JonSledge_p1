@@ -46,6 +46,21 @@ namespace p1_2.Utils
       return myDict;
     }
 
+    public static List<OrderProduct> CreateOrderProducts(List<ShoppingCart> shoppingCart, Customer customer, CustomerAddress customerAddress)
+    {
+      List<OrderProduct> orderProducts = new List<OrderProduct>();
+      foreach (var sh in shoppingCart)
+      {
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.ProductId = sh.ProductId;
+        orderProduct.StoreId = sh.StoreId;
+        orderProduct.CustomerId = customer.CustomerId;
+        orderProduct.CustomerAddress = customerAddress;
+        orderProducts.Add(orderProduct);
+      }
+      return orderProducts;
+    }
+
     public static void Shuffle(List<string> l, int n)
     {
       Random r = new Random();

@@ -45,24 +45,9 @@ namespace p1_2.Utils
       productView.Price = prod.Price;
       productView.ProductId = prod.ProductId;
       productView.Title = prod.Title;
-      productView.IsInCart = (shoppingCartInvs.Count() == 2);
+      productView.IsInCart = (shoppingCartInvs.Count == 2);
 
       return productView;
-    }
-
-    public List<OrderProduct> CreateOrderProducts(List<ShoppingCart> shoppingCart, Customer customer, CustomerAddress customerAddress)
-    {
-      List<OrderProduct> orderProducts = new List<OrderProduct>();
-      foreach (var sh in shoppingCart)
-      {
-        OrderProduct orderProduct = new OrderProduct();
-        orderProduct.ProductId = sh.ProductId;
-        orderProduct.StoreId = sh.StoreId;
-        orderProduct.CustomerId = customer.CustomerId;
-        orderProduct.CustomerAddress = customerAddress;
-        orderProducts.Add(orderProduct);
-      }
-      return orderProducts;
     }
 
     public ShoppingCart CreateShoppingCart(ProductView productView, int storeId, string state)

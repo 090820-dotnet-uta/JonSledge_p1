@@ -13,7 +13,7 @@ namespace p1_2.Controllers
   {
     private readonly BookopolisDbContext _db;
     private readonly IMemoryCache _cache;
-    private List<ShoppingCart> shoppingCartProducts;
+    private readonly List<ShoppingCart> shoppingCartProducts;
     public ProductController(BookopolisDbContext db, IMemoryCache cache)
     {
       _cache = cache;

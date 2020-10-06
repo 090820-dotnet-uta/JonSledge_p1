@@ -51,10 +51,7 @@ namespace p1_2.Controllers
       orderView.Orders = res;
       orderView.Stores = stores;
 
-
-      //return RedirectToAction("StoreOrders", new { id });
       return View("StoreOrders", orderView);
-
     }
 
     public IActionResult StoreOrders(int id)
@@ -146,10 +143,7 @@ namespace p1_2.Controllers
       orderView.Orders = res;
       orderView.Customers = customers;
 
-
-      //return RedirectToAction("StoreOrders", new { id });
       return View("CustomerOrders", orderView);
-
     }
 
     public IActionResult CustomerOrders()

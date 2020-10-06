@@ -64,7 +64,6 @@ namespace p1_2.Controllers
 
     public IActionResult SearchCustomers(CustomerView customerV)
     {
-      //Customer loggedInCustomer = (Customer)_cache.Get("LoggedInCustomer");
 
       if (customerV.FirstName == null)
       {
@@ -102,6 +101,5 @@ namespace p1_2.Controllers
 
       return Json(names);
     }
-
   }
 }

@@ -1,16 +1,16 @@
-using System;
 using Xunit;
-using p1_2.Controllers;
-using Microsoft.EntityFrameworkCore;
-using p1_2.Data;
-using Microsoft.AspNetCore.Mvc;
-using p1_2.Models;
-using p1_2.Utils;
-using System.Collections.Generic;
-using p1_2.DbManip;
+using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Caching.Memory;
+using p1_2.Controllers;
+using p1_2.Data;
+using p1_2.Models;
+using p1_2.Utils;
+using p1_2.DbManip;
 
 namespace p1_2.Test
 {
@@ -146,7 +146,7 @@ namespace p1_2.Test
 
       using (var context = new BookopolisDbContext(options))
       {
-        Assert.False(Util.IsSeeded(context));
+        Assert.False(DbManipulation.IsSeeded(context));
       }
     }
 
@@ -160,7 +160,7 @@ namespace p1_2.Test
       using (var context = new BookopolisDbContext(options))
       {
         DbManipulation.SeedDb(context);
-        Assert.True(Util.IsSeeded(context));
+        Assert.True(DbManipulation.IsSeeded(context));
       }
     }
 
@@ -362,7 +362,9 @@ namespace p1_2.Test
           inventory.Amount = 1;
         }
 
-        List<ProductView> productViews = DbManipulation.CreateProductViews(products, inventories).ToList();
+        ViewModel viewModel = new ViewModel();
+
+        List<ProductView> productViews = viewModel.CreateProductViews(products, inventories).ToList();
 
         foreach (ProductView productView in productViews)
         {
@@ -476,7 +478,9 @@ namespace p1_2.Test
 
         List<ShoppingCart> shoppingCartInvs = DbManipulation.GetInventoryOfShoppingCart(shoppingCartProducts, 1, 3);
 
-        ProductView productView = DbManipulation.CreateProductView(shoppingCartInvs, inv, prod);
+        ViewModel viewModel = new ViewModel();
+
+        ProductView productView = viewModel.CreateProductView(shoppingCartInvs, inv, prod);
 
         Assert.Equal(0, productView.Amount);
       }
@@ -505,7 +509,9 @@ namespace p1_2.Test
           IsInCart = true,
         };
 
-        ShoppingCart shoppingCart = DbManipulation.CreateShoppingCart(productView, 1, "Missouri");
+        ViewModel viewModel = new ViewModel();
+
+        ShoppingCart shoppingCart = viewModel.CreateShoppingCart(productView, 1, "Missouri");
 
         Assert.Equal(1, shoppingCart.StockAmount);
         Assert.Equal("Missouri", shoppingCart.State);

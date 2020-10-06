@@ -34,6 +34,9 @@ namespace p1_2.DbManip
       context.SaveChanges();
     }
 
+    public static bool IsSeeded(BookopolisDbContext _db)
+      => (_db.Products.Count() > 0 && _db.Stores.Count() > 0);
+
     public static bool IsStore(BookopolisDbContext context, int? id)
       => (context.Stores.FirstOrDefault(s => s.StoreId == id) != null);
 
@@ -69,63 +72,31 @@ namespace p1_2.DbManip
       }
     }
 
-    public static IEnumerable<ProductView> CreateProductViews(List<Product> prodList, List<Inventory> inventories)
-    {
-      List<ProductView> prodViews = new List<ProductView>();
-      for (int i = 0; i < inventories.Count; i++)
-      {
-        ProductView productView = new ProductView()
-        {
-          Amount = inventories[i].Amount,
-          Author = prodList[i].Author,
-          Description = prodList[i].Description,
-          Price = prodList[i].Price,
-          ProductId = prodList[i].ProductId,
-          Title = prodList[i].Title
-        };
-        prodViews.Add(productView);
-      }
-      IEnumerable<ProductView> EProdViews = prodViews;
-      return EProdViews;
-    }
-
     public static IEnumerable<Inventory> GetInventories(BookopolisDbContext context)
       => context.Inventories;
 
+    public static Customer GetCustomer(BookopolisDbContext context, int? customerId)
+      => context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
+
+    public static IEnumerable<CustomerAddress> GetCustomerAddresses(BookopolisDbContext context, int? customerId)
+       => context.CustomerAddresses.Where(ca => ca.CustomerId == customerId);
+
+    public static void UpdateInventoryAmounts(BookopolisDbContext context, Dictionary<int, int> myDict)
+    {
+      for (int i = 0; i < myDict.Keys.Count; i++)
+      {
+        for (int j = 0; j < context.Inventories.ToList().Count; j++)
+        {
+          if (myDict.Keys.ToList()[i] == context.Inventories.ToList()[j].InventoryId)
+          {
+            context.Inventories.ToList()[j].Amount -= myDict[context.Inventories.ToList()[j].InventoryId];
+          }
+        }
+      }
+    }
+
     public static List<ShoppingCart> GetInventoryOfShoppingCart(List<ShoppingCart> shoppingCartProducts, int? storeId, int? productId)
       => shoppingCartProducts.Where(sh => sh.StoreId == storeId && sh.ProductId == productId).ToList();
-
-    public static ProductView CreateProductView(List<ShoppingCart> shoppingCartInvs, Inventory inv, Product prod)
-    {
-      ProductView productView = new ProductView();
-
-      productView.Amount = shoppingCartInvs.Count > 0 ? shoppingCartInvs[shoppingCartInvs.Count - 1].StockAmount : inv.Amount;
-      productView.Author = prod.Author;
-      productView.Description = prod.Description;
-      productView.Price = prod.Price;
-      productView.ProductId = prod.ProductId;
-      productView.Title = prod.Title;
-      productView.IsInCart = (shoppingCartInvs.Count() == 2);
-
-      return productView;
-    }
-
-    public static ShoppingCart CreateShoppingCart(ProductView productView, int storeId, string state)
-    {
-      productView.Amount--;
-      ShoppingCart sh = new ShoppingCart()
-      {
-        StockAmount = productView.Amount,
-        Author = productView.Author,
-        Title = productView.Title,
-        Price = productView.Price,
-        StoreId = storeId,
-        ProductId = productView.ProductId,
-        State = state
-      };
-
-      return sh;
-    }
 
   }
 }

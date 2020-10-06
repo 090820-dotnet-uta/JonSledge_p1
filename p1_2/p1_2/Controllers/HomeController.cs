@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using p1_2.Data;
 using p1_2.Models;
-using p1_2.Utils;
 using p1_2.DbManip;
 
 namespace p1_2.Controllers
@@ -18,7 +17,7 @@ namespace p1_2.Controllers
 
     public IActionResult Index()
     {
-      if (!Util.IsSeeded(_db))
+      if (!DbManipulation.IsSeeded(_db))
       {
         DbManipulation.SeedDb(_db);
       }

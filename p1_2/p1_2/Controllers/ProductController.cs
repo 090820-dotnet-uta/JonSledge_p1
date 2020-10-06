@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using p1_2.Data;
@@ -43,7 +42,10 @@ namespace p1_2.Controllers
       List<Product> prodList = DbManipulation.GetProducts(_db).ToList();
 
       DbManipulation.SetShoppingCartStock(shoppingCartProds, inventories);
-      IEnumerable<ProductView> EProdViews = DbManipulation.CreateProductViews(prodList, inventories);
+
+      ViewModel viewModel = new ViewModel();
+
+      IEnumerable<ProductView> EProdViews = viewModel.CreateProductViews(prodList, inventories);
 
 
       return View(EProdViews);
@@ -68,8 +70,10 @@ namespace p1_2.Controllers
         return NotFound();
       }
 
+      ViewModel viewModel = new ViewModel();
+
       List<ShoppingCart> shoppingCartInvs = DbManipulation.GetInventoryOfShoppingCart(shoppingCartProducts, (int)_cache.Get("StoreId"), id);
-      ProductView productView = DbManipulation.CreateProductView(shoppingCartInvs, inv, prod);
+      ProductView productView = viewModel.CreateProductView(shoppingCartInvs, inv, prod);
 
       return View(productView);
     }
@@ -79,7 +83,9 @@ namespace p1_2.Controllers
       int id = (int)_cache.Get("StoreId");
       Store store = (Store)_cache.Get("Store");
 
-      ShoppingCart shoppingCart = DbManipulation.CreateShoppingCart(p, id, store.State);
+      ViewModel viewModel = new ViewModel();
+
+      ShoppingCart shoppingCart = viewModel.CreateShoppingCart(p, id, store.State);
       shoppingCart.Inventory = DbManipulation.GetInventoryOfStoreProduct(_db, shoppingCart.StoreId, shoppingCart.ProductId);
 
       shoppingCartProducts.Add(shoppingCart);

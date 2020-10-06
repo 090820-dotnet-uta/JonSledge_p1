@@ -63,7 +63,7 @@ namespace p1_2.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("State")
@@ -112,9 +112,6 @@ namespace p1_2.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomerAddressId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("TimeOfOrder")
                         .HasColumnType("datetime2");
 
@@ -122,8 +119,6 @@ namespace p1_2.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("CustomerAddressId");
 
                     b.ToTable("Orders");
                 });
@@ -134,6 +129,9 @@ namespace p1_2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerAddressId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -148,6 +146,8 @@ namespace p1_2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderProductId");
+
+                    b.HasIndex("CustomerAddressId");
 
                     b.HasIndex("OrderId");
 
@@ -206,7 +206,9 @@ namespace p1_2.Migrations
                 {
                     b.HasOne("p1_2.Models.Customer", null)
                         .WithMany("CustomerAddresses")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("p1_2.Models.Inventory", b =>
@@ -218,15 +220,14 @@ namespace p1_2.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("p1_2.Models.Order", b =>
-                {
-                    b.HasOne("p1_2.Models.CustomerAddress", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerAddressId");
-                });
-
             modelBuilder.Entity("p1_2.Models.OrderProduct", b =>
                 {
+                    b.HasOne("p1_2.Models.CustomerAddress", "CustomerAddress")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("CustomerAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("p1_2.Models.Order", null)
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace p1_2.Migrations
 {
-    public partial class localSeed1 : Migration
+    public partial class Migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,20 @@ namespace p1_2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.CustomerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeOfOrder = table.Column<DateTime>(nullable: false),
+                    Total = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +80,7 @@ namespace p1_2.Migrations
                     State = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
                     ZIP = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<int>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,7 +90,7 @@ namespace p1_2.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,27 +115,6 @@ namespace p1_2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimeOfOrder = table.Column<DateTime>(nullable: false),
-                    Total = table.Column<double>(nullable: false),
-                    CustomerAddressId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_CustomerAddresses_CustomerAddressId",
-                        column: x => x.CustomerAddressId,
-                        principalTable: "CustomerAddresses",
-                        principalColumn: "CustomerAddressId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderProducts",
                 columns: table => new
                 {
@@ -130,11 +123,18 @@ namespace p1_2.Migrations
                     ProductId = table.Column<int>(nullable: false),
                     OrderId = table.Column<int>(nullable: false),
                     StoreId = table.Column<int>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false),
+                    CustomerAddressId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderProducts", x => x.OrderProductId);
+                    table.ForeignKey(
+                        name: "FK_OrderProducts_CustomerAddresses_CustomerAddressId",
+                        column: x => x.CustomerAddressId,
+                        principalTable: "CustomerAddresses",
+                        principalColumn: "CustomerAddressId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProducts_Orders_OrderId",
                         column: x => x.OrderId,
@@ -154,14 +154,14 @@ namespace p1_2.Migrations
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderProducts_CustomerAddressId",
+                table: "OrderProducts",
+                column: "CustomerAddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderProducts_OrderId",
                 table: "OrderProducts",
                 column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerAddressId",
-                table: "Orders",
-                column: "CustomerAddressId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -179,10 +179,10 @@ namespace p1_2.Migrations
                 name: "Stores");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "CustomerAddresses");
 
             migrationBuilder.DropTable(
-                name: "CustomerAddresses");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Customers");

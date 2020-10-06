@@ -1,0 +1,32 @@
+﻿.a-none, .a-none:hover, .a-none:focus, .a-none:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.a-none {
+  color: inherit;
+}
+
+  .a-none a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+.hover:hover {
+  border: 1px solid #28a745 !important;
+  background-color: #394046 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hover-darker:hover {
+  border: 1px solid #28a745 !important;
+  background-color: #394046 !important;
+}
+
+  .hover-darker:hover span {
+    border: 1px solid #28a745 !important;
+    background-color: #394046 !important;
+  }

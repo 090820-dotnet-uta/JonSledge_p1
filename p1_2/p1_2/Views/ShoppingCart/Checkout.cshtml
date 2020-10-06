@@ -18,14 +18,15 @@
 
             @foreach (var item in Model.ShoppingCarts)
             {
-              <div class="card mx-3 shadow-lg"
+              <div class="card bg-dark border border-secondary mx-3 px-3 shadow-lg"
                    style="max-width: 12rem; max-height: 15rem;">
                 <div class="card-body pl-2 pr-2">
-                  <h6 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h6>
-                  <h5 class="text-success mt-1 pt-1 pb-1 text-dark">
-                    <span class="text-success">
-                      <small>Price:&nbsp;&nbsp;</small>
-                      @Html.DisplayFor(modelItem => item.Price)
+                  <h4 class="card-title text-light">@Html.DisplayFor(modelItem => item.State)</h4>
+                  <h5 class="text-light">@Html.DisplayFor(modelItem => item.Title)</h5>
+                  <h6 class="text-light">@Html.DisplayFor(modelItem => item.Author)</h6>
+                  <h5>
+                    <span class="badge badge-success">
+                      $ @Html.DisplayFor(modelItem => item.Price)
                     </span>
                   </h5>
                 </div>
@@ -104,35 +105,4 @@
   </div>
 </div>
 
-
-<style>
-  .a-none, .a-none:hover, .a-none:focus, .a-none:active {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .a-none {
-    color: inherit;
-  }
-
-    .a-none a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-  .hover:hover {
-    transition: all 0.1s ease-in;
-    transform: scale(1.02);
-  }
-
-  .hover:active {
-    transition: all 0.1s ease-out;
-    transform: scale(1.01);
-  }
-
-    .hover:active::after {
-      transition: all 0.1s ease-in;
-      transform: scale(1.1);
-    }
-</style>
 

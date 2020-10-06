@@ -36,39 +36,8 @@
     }
     else
     {
-      <button class="btn btn-success btn-lg a-none" type="submit">@Html.ActionLink("Add To Cart", "AddToCart", "Product", @Model)</button>
+      <button class="btn btn-success btn-lg a-none text-white" type="submit">@Html.ActionLink("Add To Cart", "AddToCart", "Product", @Model)</button>
     }
   </div>
 </div>
-
-<style>
-  .a-none, .a-none:hover, .a-none:focus, .a-none:active {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .a-none {
-    color: inherit;
-  }
-
-    .a-none a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-  .hover:hover {
-    transition: all 0.1s ease-in;
-    transform: scale(1.02);
-  }
-
-  .hover:active {
-    transition: all 0.1s ease-out;
-    transform: scale(1.01);
-  }
-
-    .hover:active::after {
-      transition: all 0.1s ease-in;
-      transform: scale(1.1);
-    }
-</style>
 

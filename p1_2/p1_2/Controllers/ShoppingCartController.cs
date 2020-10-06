@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using p1_2.Data;
 using p1_2.Utils;
 using p1_2.Models;
+using p1_2.DbManip;
 
 namespace p1_2.Controllers
 {
@@ -61,13 +62,9 @@ namespace p1_2.Controllers
         return RedirectToAction("Login", "Customer");
       }
 
-      var x = shoppingCart.Sum(s => s.Price);
-      ViewData["CheckoutTotal"] = x;
-
-      CheckoutView checkoutView = new CheckoutView();
-      checkoutView.ShoppingCarts = shoppingCart;
-      checkoutView.CustomerAddress = new CustomerAddress();
-
+      ViewModel viewModel = new ViewModel();
+      ViewData["CheckoutTotal"] = shoppingCart.Sum(s => s.Price);
+      CheckoutView checkoutView = viewModel.CreateCheckoutView(shoppingCart);
 
       return View(checkoutView);
     }
@@ -75,51 +72,30 @@ namespace p1_2.Controllers
     [HttpPost]
     public IActionResult PlaceOrder([Bind("StreetAddress,Country,City,State,ZIP")] CustomerAddress customerAddress)
     {
-      Order order = new Order();
-      List<OrderProduct> orderProducts = new List<OrderProduct>();
       Customer tempCust = (Customer)_cache.Get("LoggedInCustomer");
-      Customer customer = _db.Customers.FirstOrDefault(c => c.CustomerId == tempCust.CustomerId);
+      Customer customer = DbManipulation.GetCustomer(_db, tempCust.CustomerId);
+      List<CustomerAddress> customerAddresses1 = DbManipulation.GetCustomerAddresses(_db, tempCust.CustomerId).ToList();
 
-      // TODO Check to see if customer already has any CustomerAddresses
+
+      if (customerAddresses1.Count > 0)
+      {
+        customerAddress = Util.CheckForRepeatAddress(customerAddresses1, customerAddress);
+      }
 
       List<CustomerAddress> customerAddresses = new List<CustomerAddress>();
+      customerAddresses = customerAddresses1;
 
-      Dictionary<int, int> myDict = new Dictionary<int, int>();
+      Dictionary<int, int> myDict = Util.GetShoppingCartInventoryAmounts(shoppingCart);
+      DbManipulation.UpdateInventoryAmounts(_db, myDict);
 
+      ViewModel viewModel = new ViewModel();
 
-      foreach (var sh in shoppingCart)
-      {
-        OrderProduct orderProduct = new OrderProduct();
-        orderProduct.ProductId = sh.ProductId;
-        orderProduct.StoreId = sh.StoreId;
-        orderProduct.CustomerId = customer.CustomerId;
-        orderProducts.Add(orderProduct);
-      }
-
-      for (int i = 0; i < shoppingCart.Count; i++)
-      {
-        myDict[shoppingCart[i].Inventory.InventoryId] = shoppingCart.Count(s => s.Inventory.InventoryId == shoppingCart[i].Inventory.InventoryId);
-      }
-
-      // modify inventory amount values
-      for (int i = 0; i < myDict.Keys.Count; i++)
-      {
-        for (int j = 0; j < _db.Inventories.ToList().Count; j++)
-        {
-          if (myDict.Keys.ToList()[i] == _db.Inventories.ToList()[j].InventoryId)
-          {
-            _db.Inventories.ToList()[j].Amount -= myDict[_db.Inventories.ToList()[j].InventoryId];
-          }
-        }
-      }
-
+      Order order = new Order();
       order.TimeOfOrder = DateTime.Now;
-      order.OrderProducts = orderProducts;
+      order.OrderProducts = viewModel.CreateOrderProducts(shoppingCart, customer, customerAddress);
       order.Total = shoppingCart.Sum(sh => sh.Price);
       List<Order> orders = new List<Order>();
       orders.Add(order);
-
-      customerAddress.Orders = orders;
 
       customerAddresses.Add(customerAddress);
 

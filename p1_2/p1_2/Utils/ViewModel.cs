@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using p1_2.Interfaces;
 using p1_2.Models;
 
@@ -66,5 +65,46 @@ namespace p1_2.Utils
 
       return sh;
     }
+    public OrderView CreateOrderView(List<Order> orders)
+    {
+      OrderView orderView = new OrderView();
+      orderView.Orders = orders;
+      return orderView;
+    }
+
+    public OrderView CreateOrderView(List<Order> orders, List<Store> stores)
+    {
+      OrderView orderView = new OrderView();
+      orderView.Orders = orders;
+      orderView.Stores = stores;
+      return orderView;
+    }
+
+    public OrderView CreateOrderView(List<Order> orders, List<Customer> customers)
+    {
+      OrderView orderView = new OrderView();
+      orderView.Orders = orders;
+      orderView.Customers = customers;
+      return orderView;
+    }
+
+    public OrderView CreateEmptyOrderView(List<Store> stores)
+    {
+      OrderView orderViewNone = new OrderView();
+      orderViewNone.EmptyMessage = "There are no orders for that state";
+      orderViewNone.IsEmpty = true;
+      orderViewNone.Stores = stores;
+      return orderViewNone;
+    }
+
+    public OrderView CreateEmptyOrderView(List<Customer> customers)
+    {
+      OrderView orderViewNone = new OrderView();
+      orderViewNone.EmptyMessage = "There are no orders for that Customer";
+      orderViewNone.IsEmpty = true;
+      orderViewNone.Customers = customers;
+      return orderViewNone;
+    }
+
   }
 }

@@ -42,7 +42,7 @@
             @foreach (var item in Model.Stores)
             {
               <li onclick="HandleStoreClick(@item.StoreId)" class="list-group-item list-group-item bg-dark border border-secondary my-1 py-0 pointer hover-darker">
-                <a class="a-none" asp-action="SelectStore" asp-controller="Order" asp-route-id="@item.StoreId">
+                <a class="a-none" asp-action="StoreOrders" asp-controller="Order" asp-route-id="@item.StoreId">
                   <div class="row py-3">
                     <div class="col d-flex align-items-center">
                       <h5 class="m-0 d-flex">

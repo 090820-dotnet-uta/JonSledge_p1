@@ -30,3 +30,34 @@
     border: 1px solid #28a745 !important;
     background-color: #394046 !important;
   }
+
+.form-signin {
+  max-width: 380px !important;
+  min-width: 270px !important;
+}
+
+.form-signup {
+  max-width: 380px !important;
+  min-width: 270px !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .nav-container {
+    max-width: 569px !important;
+    padding: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .display-1 {
+    font-size: 68px !important;
+  }
+
+  .display-4 {
+    font-size: 40px !important;
+  }
+
+  .btn-lg {
+    padding: 4px 8px !important;
+  }
+}

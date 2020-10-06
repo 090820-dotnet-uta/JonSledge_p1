@@ -3,7 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using p1_2.Data;
+using p1_2.DbManip;
 using p1_2.Models;
+using p1_2.Utils;
 
 namespace p1_2.Controllers
 {
@@ -17,48 +19,13 @@ namespace p1_2.Controllers
       _db = db;
     }
 
-    public IActionResult SelectStore(int? id)
-    {
-      ViewData["StoreOrders"] = "active";
-      var orderProducts = _db.OrderProducts.Where(op => op.StoreId == id).Distinct();
-      var stores = _db.Stores.ToList();
-
-      if (id == 0)
-      {
-        ViewData["CurrentStore"] = "none";
-      }
-      else
-      {
-        ViewData["CurrentStore"] = stores.FirstOrDefault(s => s.StoreId == id).State;
-      }
-
-      if (orderProducts.ToList().Count == 0)
-      {
-        OrderView orderViewNone = new OrderView();
-        orderViewNone.EmptyMessage = "There are no orders for that state";
-        orderViewNone.IsEmpty = true;
-        orderViewNone.Stores = stores;
-        return View("StoreOrders", orderViewNone);
-      }
-
-      var inboth = (from p1 in _db.Orders
-                    join p2 in orderProducts
-                    on p1.OrderId equals p2.OrderId
-                    select p1).Distinct();
-      var res = inboth.ToList();
-
-      OrderView orderView = new OrderView();
-      orderView.Orders = res;
-      orderView.Stores = stores;
-
-      return View("StoreOrders", orderView);
-    }
-
     public IActionResult StoreOrders(int id)
     {
       ViewData["StoreOrders"] = "active";
-      var orderProducts = _db.OrderProducts.Where(op => op.StoreId == id).Distinct();
-      var stores = _db.Stores.ToList();
+      ViewModel viewModel = new ViewModel();
+      var orderProducts = DbManipulation.GetOrdersFromStore(_db, id);
+      List<Store> stores = DbManipulation.GetStores(_db).ToList();
+
       if (id == 0)
       {
         ViewData["CurrentStore"] = "none";
@@ -70,52 +37,38 @@ namespace p1_2.Controllers
 
       if (orderProducts.ToList().Count == 0)
       {
-        OrderView orderViewNone = new OrderView();
-        orderViewNone.EmptyMessage = "There are no orders for that state";
-        orderViewNone.IsEmpty = true;
-        orderViewNone.Stores = stores;
+        OrderView orderViewNone = viewModel.CreateEmptyOrderView(stores);
         return View(orderViewNone);
       }
 
-      var orders = _db.Orders.Where(o => orderProducts.All(op => op.OrderId == o.OrderId)).ToList();
+      var orders = DbManipulation.GetOrdersFromOrderProducts(_db, orderProducts);
 
-
-      OrderView orderView = new OrderView();
-      orderView.Orders = orders;
-      orderView.Stores = stores;
-
-
+      OrderView orderView = viewModel.CreateOrderView(orders, stores);
       return View(orderView);
     }
 
     public IActionResult MyOrders()
     {
       ViewData["MyOrders"] = "active";
+      ViewModel viewModel = new ViewModel();
       Customer tempCust = (Customer)_cache.Get("LoggedInCustomer");
-      var orderProducts = _db.OrderProducts.Where(op => op.CustomerId == tempCust.CustomerId);
 
-      var stores = _db.Stores.ToList();
+      IEnumerable<OrderProduct> orderProducts = DbManipulation.GetCustomerOrderProducts(_db, tempCust.CustomerId);
 
-      var inboth = (from p1 in _db.Orders
-                    join p2 in orderProducts
-                    on p1.OrderId equals p2.OrderId
-                    select p1).Distinct();
-      var res = inboth.ToList();
+      List<Order> orders = DbManipulation.GetOrdersFromOrderProducts(_db, orderProducts);
 
-
-      OrderView orderView = new OrderView();
-      orderView.Orders = res;
-      orderView.Stores = stores;
+      OrderView orderView = viewModel.CreateOrderView(orders);
       return View(orderView);
     }
 
-    public IActionResult SelectCustomer(int? id)
+    public IActionResult CustomerOrders(int? id)
     {
       ViewData["CustomerOrders"] = "active";
-      var orderProducts = _db.OrderProducts.Where(op => op.CustomerId == id).Distinct();
-      var customers = _db.Customers.ToList();
+      ViewModel viewModel = new ViewModel();
+      var orderProducts = DbManipulation.GetCustomerOrderProducts(_db, id);
+      var customers = DbManipulation.GetCustomers(_db).ToList();
 
-      if (id == 0)
+      if (id == 0 || id == null)
       {
         ViewData["CurrentCustomer"] = "none";
       }
@@ -126,37 +79,14 @@ namespace p1_2.Controllers
 
       if (orderProducts.ToList().Count == 0)
       {
-        OrderView orderViewNone = new OrderView();
-        orderViewNone.EmptyMessage = "There are no orders for that Customer";
-        orderViewNone.IsEmpty = true;
-        orderViewNone.Customers = customers;
+        OrderView orderViewNone = viewModel.CreateEmptyOrderView(customers);
         return View("CustomerOrders", orderViewNone);
       }
 
-      var inboth = (from p1 in _db.Orders
-                    join p2 in orderProducts
-                    on p1.OrderId equals p2.OrderId
-                    select p1).Distinct();
-      var res = inboth.ToList();
-
-      OrderView orderView = new OrderView();
-      orderView.Orders = res;
-      orderView.Customers = customers;
+      List<Order> orders = DbManipulation.GetOrdersFromOrderProducts(_db, orderProducts);
+      OrderView orderView = viewModel.CreateOrderView(orders, customers);
 
       return View("CustomerOrders", orderView);
-    }
-
-    public IActionResult CustomerOrders()
-    {
-      ViewData["CustomerOrders"] = "active";
-
-      OrderView orderView = new OrderView();
-      List<Order> orders = new List<Order>();
-      var customers = _db.Customers.ToList();
-      orderView.Orders = orders;
-      orderView.Customers = customers;
-
-      return View(orderView);
     }
   }
 }

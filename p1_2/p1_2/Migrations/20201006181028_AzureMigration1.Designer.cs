@@ -10,7 +10,7 @@ using p1_2.Data;
 namespace p1_2.Migrations
 {
     [DbContext(typeof(BookopolisDbContext))]
-    [Migration("20201006132717_AzureMigration1")]
+    [Migration("20201006181028_AzureMigration1")]
     partial class AzureMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,21 +60,26 @@ namespace p1_2.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZIP")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerAddressId");

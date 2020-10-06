@@ -85,8 +85,6 @@ namespace p1_2.Controllers
       Dictionary<int, int> myDict = Util.GetShoppingCartInventoryAmounts(shoppingCart);
       DbManipulation.UpdateInventoryAmounts(_db, myDict);
 
-      ViewModel viewModel = new ViewModel();
-
       Order order = new Order();
       order.TimeOfOrder = DateTime.Now;
       order.OrderProducts = Util.CreateOrderProducts(shoppingCart, customer, customerAddress);

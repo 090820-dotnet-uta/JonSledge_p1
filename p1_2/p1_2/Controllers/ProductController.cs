@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using p1_2.Data;
 using p1_2.Models;
 using p1_2.Utils;
-using Microsoft.Extensions.Caching.Memory;
 using p1_2.DbManip;
 
 namespace p1_2.Controllers

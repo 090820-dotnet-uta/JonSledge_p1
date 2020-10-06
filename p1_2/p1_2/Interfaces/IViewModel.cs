@@ -11,6 +11,16 @@ namespace p1_2.Interfaces
 
     public IEnumerable<ProductView> CreateProductViews(List<Product> prodList, List<Inventory> inventories);
 
+    public OrderView CreateOrderView(List<Order> orders);
+
+    public OrderView CreateOrderView(List<Order> orders, List<Store> stores);
+
+    public OrderView CreateOrderView(List<Order> orders, List<Customer> customers);
+
+    public OrderView CreateEmptyOrderView(List<Store> stores);
+
+    public OrderView CreateEmptyOrderView(List<Customer> customers);
+
     public ShoppingCart CreateShoppingCart(ProductView productView, int storeId, string state);
   }
 }

@@ -78,8 +78,14 @@ namespace p1_2.DbManip
     public static Customer GetCustomer(BookopolisDbContext context, int? customerId)
       => context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
 
+    public static IEnumerable<Customer> GetCustomers(BookopolisDbContext context)
+      => context.Customers;
+
     public static IEnumerable<CustomerAddress> GetCustomerAddresses(BookopolisDbContext context, int? customerId)
        => context.CustomerAddresses.Where(ca => ca.CustomerId == customerId);
+
+    public static IEnumerable<OrderProduct> GetCustomerOrderProducts(BookopolisDbContext context, int? customerId)
+      => context.OrderProducts.Where(op => op.CustomerId == customerId);
 
     public static void UpdateInventoryAmounts(BookopolisDbContext context, Dictionary<int, int> myDict)
     {
@@ -97,6 +103,19 @@ namespace p1_2.DbManip
 
     public static List<ShoppingCart> GetInventoryOfShoppingCart(List<ShoppingCart> shoppingCartProducts, int? storeId, int? productId)
       => shoppingCartProducts.Where(sh => sh.StoreId == storeId && sh.ProductId == productId).ToList();
+
+    public static List<Order> GetOrdersFromOrderProducts(BookopolisDbContext context, IEnumerable<OrderProduct> orderProducts)
+    {
+      IQueryable<Order> inboth = (from p1 in context.Orders
+                                  join p2 in orderProducts
+                                  on p1.OrderId equals p2.OrderId
+                                  select p1).Distinct();
+      List<Order> res = inboth.ToList();
+      return res;
+    }
+
+    public static IEnumerable<OrderProduct> GetOrdersFromStore(BookopolisDbContext context, int? storeId)
+      => context.OrderProducts.Where(op => op.StoreId == storeId).Distinct();
 
   }
 }

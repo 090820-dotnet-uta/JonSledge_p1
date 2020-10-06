@@ -12,9 +12,9 @@ namespace p1_2.Controllers
 {
   public class ShoppingCartController : Controller
   {
-    private IMemoryCache _cache;//must set this for DI in Startup.cs
+    private readonly IMemoryCache _cache;//must set this for DI in Startup.cs
     private readonly BookopolisDbContext _db;
-    List<ShoppingCart> shoppingCart;
+    private List<ShoppingCart> shoppingCart;
     public ShoppingCartController(IMemoryCache cache, BookopolisDbContext db)
     {
       _cache = cache;

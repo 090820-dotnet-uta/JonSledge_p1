@@ -12,8 +12,8 @@ namespace p1_2.Controllers
   public class ProductController : Controller
   {
     private readonly BookopolisDbContext _db;
-    private IMemoryCache _cache;
-    List<ShoppingCart> shoppingCartProducts;
+    private readonly IMemoryCache _cache;
+    private List<ShoppingCart> shoppingCartProducts;
     public ProductController(BookopolisDbContext db, IMemoryCache cache)
     {
       _cache = cache;

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace p1_2.Utils
 {
-  public class Util
+  public static class Util
   {
     public static bool IsLoggedIn(IMemoryCache cache)
     {

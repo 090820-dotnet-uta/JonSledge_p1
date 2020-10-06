@@ -10,7 +10,7 @@ namespace p1_2.Controllers
   public class CustomerController : Controller
   {
     private readonly BookopolisDbContext _db;
-    private IMemoryCache _cache;
+    private readonly IMemoryCache _cache;
 
     public CustomerController(BookopolisDbContext db, IMemoryCache cache)
     {

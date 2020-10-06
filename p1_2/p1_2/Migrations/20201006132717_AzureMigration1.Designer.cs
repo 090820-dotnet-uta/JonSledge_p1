@@ -10,8 +10,8 @@ using p1_2.Data;
 namespace p1_2.Migrations
 {
     [DbContext(typeof(BookopolisDbContext))]
-    [Migration("20201006014507_Migration1")]
-    partial class Migration1
+    [Migration("20201006132717_AzureMigration1")]
+    partial class AzureMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

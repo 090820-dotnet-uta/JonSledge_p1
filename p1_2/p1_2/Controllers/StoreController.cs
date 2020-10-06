@@ -11,7 +11,7 @@ namespace p1_2.Controllers
   public class StoreController : Controller
   {
     private readonly BookopolisDbContext _db;
-    private IMemoryCache _cache;//must set this for DI in Startup.cs
+    private readonly IMemoryCache _cache;
 
     public StoreController(BookopolisDbContext db, IMemoryCache cache)
     {

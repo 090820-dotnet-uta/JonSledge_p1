@@ -9,19 +9,12 @@ namespace p1_2.Controllers
 {
   public class OrderController : Controller
   {
-    private IMemoryCache _cache;//must set this for DI in Startup.cs
+    private readonly IMemoryCache _cache;
     private readonly BookopolisDbContext _db;
-    List<ShoppingCart> shoppingCart;
     public OrderController(IMemoryCache cache, BookopolisDbContext db)
     {
       _cache = cache;
       _db = db;
-
-      if (!_cache.TryGetValue("shoppingCart", out shoppingCart))
-      {
-        _cache.Set("shoppingCart", new List<ShoppingCart>());
-        _cache.TryGetValue("shoppingCart", out shoppingCart);
-      }
     }
 
     public IActionResult SelectStore(int? id)

@@ -41,56 +41,64 @@ namespace p1_2.Models
       Title = "Catch-22",
           Author = "Joseph Heller",
           Description = "Catch-22 is a satirical war novel by American author Joseph Heller.",
-          Price = 12.50
+          Price = 12.50,
+          ImgUrl = "catch22"
         },
         new Product()
     {
       Title = "The Grapes of Wrath",
           Author = "John Steinbeck",
           Description = "The Grapes of Wrath is an American realist novel written by John Steinbeck.",
-          Price = 12.50
+          Price = 12.50,
+          ImgUrl = "thegrapesofwrath"
         },
         new Product()
     {
       Title = "Midnight's Children",
           Author = "Salman Rushdie",
           Description = "Midnight's Children is a 1981 novel by author Salman Rushdie",
-          Price = 12.50
+          Price = 12.50,
+          ImgUrl = "midnightschildren"
         },
         new Product()
     {
       Title = "Ulysses",
           Author = "James Joyce",
           Description = "Ulysses is a modernist novel by Irish writer James Joyce.",
-          Price = 15.50
+          Price = 15.50,
+          ImgUrl = "ulysses"
         },
         new Product()
     {
       Title = "The Sound and the Fury",
           Author = "William Faulkner",
           Description = "The Sound and the Fury is a novel by the American author William Faulkner.",
-          Price = 10.50
+          Price = 10.50,
+          ImgUrl = "thesoundandthefury"
         },
         new Product()
     {
       Title = "On the Road",
           Author = "Jack Kerouac",
           Description = "On the Road is a 1957 novel by American writer Jack Kerouac, based on the travels of Kerouac and his friends across the United States",
-          Price = 11.50
+          Price = 11.50,
+          ImgUrl = "ontheroad"
         },
         new Product()
     {
       Title = "The Sun Also Rises",
           Author = "Ernest Hemingway",
           Description = "The Sun Also Rises is a 1926 novel by American writer Ernest Hemingway that portrays American and British expatriates who travel from Paris to the Festival of San Fermín in Pamplona to watch the running of the bulls and the bullfights.",
-          Price = 16.50
+          Price = 16.50,
+          ImgUrl = "thesunalsorises"
         },
         new Product()
     {
       Title = "I, Claudius",
           Author = "Robert Graves",
           Description = "I, Claudius is a historical novel by English writer Robert Graves, published in 1934.",
-          Price = 10.50
+          Price = 10.50,
+          ImgUrl = "iclaudius"
         },
       };
   }

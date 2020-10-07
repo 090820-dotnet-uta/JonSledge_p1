@@ -46,7 +46,8 @@ namespace p1_2.Migrations
                     Title = table.Column<string>(nullable: true),
                     Author = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false)
+                    Price = table.Column<double>(nullable: false),
+                    ImgUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

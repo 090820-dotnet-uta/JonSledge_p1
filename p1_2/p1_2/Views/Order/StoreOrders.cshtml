@@ -6,23 +6,23 @@
 }
 
 <div class="container text-white">
-  <div class="row justify-content-center">
-    <div class="col-4 d-flex justify-content-center">
+  <div class="row justify-content-center my-3">
+    <div class="col-sm-5 d-flex justify-content-center">
       @if ((string)ViewData["CurrentStore"] == "none" || ViewData["CurrentStore"] == null)
       {
-        <h1 class="font-weight-light text-center">Orders for Stores</h1>
+        <h1 class="resize-h1 font-weight-light text-center">Store Orders</h1>
       }
       else
       {
-        <h1 class="font-weight-light text-center">Orders for @ViewData["CurrentStore"].ToString()</h1>
+        <h1 class="resize-h1 font-weight-light text-center">@ViewData["CurrentStore"].ToString() Orders</h1>
       }
 
     </div>
 
 
-    <div class="col-2 text-center my-auto">
+    <div class="col-sm-2 text-center my-auto">
       <button type="button" class="btn btn-light" data-toggle="modal" data-target="#staticBackdrop">
-        Choose a store
+        Search
       </button>
     </div>
   </div>

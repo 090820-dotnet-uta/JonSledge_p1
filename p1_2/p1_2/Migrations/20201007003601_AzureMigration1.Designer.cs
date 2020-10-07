@@ -10,7 +10,7 @@ using p1_2.Data;
 namespace p1_2.Migrations
 {
     [DbContext(typeof(BookopolisDbContext))]
-    [Migration("20201006181028_AzureMigration1")]
+    [Migration("20201007003601_AzureMigration1")]
     partial class AzureMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,6 +172,9 @@ namespace p1_2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")

@@ -12,5 +12,7 @@ namespace p1_2.Models
     public string Description { get; set; }
 
     public double Price { get; set; }
+
+    public string ImgUrl { get; set; }
   }
 }

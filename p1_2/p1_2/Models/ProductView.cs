@@ -20,5 +20,7 @@ namespace p1_2.Models
     public bool IsInCart { get; set; }
 
     public string State { get; set; }
+
+    public string ImgUrl { get; set; }
   }
 }

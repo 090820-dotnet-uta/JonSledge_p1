@@ -14,17 +14,18 @@
     {
       <div class="col-lg-4">
         <a class="a-none" asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
-          <div class="card bg-dark border border-secondary rounded shadow p-3 my-1 text-center hover">
-            <h4 class="text-light">@Html.DisplayFor(modelItem => item.Title)</h4>
-            <h5 class="text-light">@Html.DisplayFor(modelItem => item.Author)</h5>
-            <h5 class="m-0 text-light">
+          <div style="max-width: 320px;" class="card bg-dark border border-secondary rounded shadow p-3 my-1 mx-auto text-center hover">
+            <img class="card-img-top" src="~/img/@(item.ImgUrl).jpg" />
+            <h5 class="text-light mt-1">@Html.DisplayFor(modelItem => item.Title)</h5>
+            <h6 class="text-light">@Html.DisplayFor(modelItem => item.Author)</h6>
+            <h4 class="m-0 text-light">
               <span class="badge badge-success">
                 $ @Html.DisplayFor(modelItem => item.Price)
               </span>
               <span class="badge badge-info">
                 Stock @Html.DisplayFor(modelItem => item.Amount)
               </span>
-            </h5>
+            </h4>
           </div>
         </a>
       </div>
@@ -32,3 +33,10 @@
   </div>
 </div>
 
+
+<style>
+  .footer {
+    position: relative !important;
+    bottom: 0 !important;
+  }
+</style>

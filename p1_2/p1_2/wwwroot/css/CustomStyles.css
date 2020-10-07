@@ -1,4 +1,8 @@
-﻿.a-none, .a-none:hover, .a-none:focus, .a-none:active {
+﻿html, body {
+  height: 100% !important;
+}
+
+.a-none, .a-none:hover, .a-none:focus, .a-none:active {
   text-decoration: none;
   color: inherit;
 }
@@ -39,6 +43,31 @@
 .form-signup {
   max-width: 380px !important;
   min-width: 270px !important;
+}
+
+.card-img-top {
+  max-height: 180px;
+  max-width: 130px;
+  margin: 0 auto !important;
+}
+
+.card-img-top-details {
+  max-height: 260px;
+  max-width: 220px;
+  margin: 0 auto !important;
+}
+
+.footer {
+  position: absolute !important;
+  bottom: 0 !important;
+  /*  margin-top: -180px !important;
+  height: 180px !important;*/
+}
+
+@media only screen and (max-width: 995px) {
+  .resize-h1 {
+    font-size: 30px !important;
+  }
 }
 
 @media only screen and (max-width: 767px) {

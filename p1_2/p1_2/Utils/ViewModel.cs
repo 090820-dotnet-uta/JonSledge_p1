@@ -26,7 +26,8 @@ namespace p1_2.Utils
           Description = prodList[i].Description,
           Price = prodList[i].Price,
           ProductId = prodList[i].ProductId,
-          Title = prodList[i].Title
+          Title = prodList[i].Title,
+          ImgUrl = prodList[i].ImgUrl
         };
         prodViews.Add(productView);
       }
@@ -45,6 +46,7 @@ namespace p1_2.Utils
       productView.ProductId = prod.ProductId;
       productView.Title = prod.Title;
       productView.IsInCart = (shoppingCartInvs.Count == 2);
+      productView.ImgUrl = prod.ImgUrl;
 
       return productView;
     }

@@ -10,7 +10,7 @@ using p1_2.Data;
 namespace p1_2.Migrations
 {
     [DbContext(typeof(BookopolisDbContext))]
-    [Migration("20201007003601_AzureMigration1")]
+    [Migration("20201007131936_AzureMigration1")]
     partial class AzureMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,8 @@ namespace p1_2.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.Property<string>("UserName")
                         .IsRequired()

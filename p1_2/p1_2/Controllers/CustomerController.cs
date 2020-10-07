@@ -49,6 +49,10 @@ namespace p1_2.Controllers
     [HttpPost]
     public IActionResult SignupCustomer([Bind("FirstName,LastName,UserName,Password")] Customer customer)
     {
+      if (!ModelState.IsValid)
+      {
+        return View("Signup");
+      }
 
       if (_db.Customers.Any(c => c.UserName == customer.UserName))
       {

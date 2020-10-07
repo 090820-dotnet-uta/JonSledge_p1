@@ -10,7 +10,7 @@
     <div class="text-center mb-4">
       <h1 class="display-4 mb-2 font-weight-normal text-white">Login</h1>
     </div>
-    <form class="form-signin mx-auto" asp-action="LoginCustomer">
+    <form class="form-signin mx-auto" asp-action="LoginCustomer" autocomplete="off">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
       <div class="form-group">
         <input type="text" asp-for="UserName" class="form-control text-center my-3" placeholder="Username" required autofocus>

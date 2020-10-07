@@ -16,7 +16,7 @@ namespace p1_2.Migrations
                     FirstName = table.Column<string>(maxLength: 20, nullable: false),
                     LastName = table.Column<string>(maxLength: 20, nullable: false),
                     UserName = table.Column<string>(maxLength: 20, nullable: false),
-                    Password = table.Column<string>(nullable: false)
+                    Password = table.Column<string>(maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {

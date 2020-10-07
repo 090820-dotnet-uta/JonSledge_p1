@@ -21,6 +21,10 @@ namespace p1_2.Controllers
 
     public IActionResult StoreOrders(int id)
     {
+      if (!Util.IsLoggedIn(_cache))
+      {
+        return RedirectToAction("Login", "Customer");
+      }
       ViewData["StoreOrders"] = "active";
       ViewModel viewModel = new ViewModel();
       var orderProducts = DbManipulation.GetOrdersFromStore(_db, id);
@@ -49,6 +53,10 @@ namespace p1_2.Controllers
 
     public IActionResult MyOrders()
     {
+      if (!Util.IsLoggedIn(_cache))
+      {
+        return RedirectToAction("Login", "Customer");
+      }
       ViewData["MyOrders"] = "active";
       ViewModel viewModel = new ViewModel();
       Customer tempCust = (Customer)_cache.Get("LoggedInCustomer");
@@ -63,6 +71,10 @@ namespace p1_2.Controllers
 
     public IActionResult CustomerOrders(int? id)
     {
+      if (!Util.IsLoggedIn(_cache))
+      {
+        return RedirectToAction("Login", "Customer");
+      }
       ViewData["CustomerOrders"] = "active";
       ViewModel viewModel = new ViewModel();
       var orderProducts = DbManipulation.GetCustomerOrderProducts(_db, id);

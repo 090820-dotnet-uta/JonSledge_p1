@@ -67,6 +67,7 @@ namespace p1_2.Utils
 
       return sh;
     }
+
     public OrderView CreateOrderView(List<Order> orders)
     {
       OrderView orderView = new OrderView();

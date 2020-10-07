@@ -6,7 +6,7 @@
 
 <div class="container">
   <h1 class="text-center text-light display-4">
-    Product List
+    Book List
   </h1>
 
   <div class="row justify-content-center">
@@ -15,7 +15,7 @@
       <div class="col-lg-4">
         <a class="a-none" asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
           <div style="max-width: 320px;" class="card bg-dark border border-secondary rounded shadow p-3 my-1 mx-auto text-center hover">
-            <img class="card-img-top" src="~/img/@(item.ImgUrl).jpg" />
+            <img class="card-img-top" src="~/img/@(item.ImgUrl).jpg" alt="Book Cover" />
             <h5 class="text-light mt-1">@Html.DisplayFor(modelItem => item.Title)</h5>
             <h6 class="text-light">@Html.DisplayFor(modelItem => item.Author)</h6>
             <h4 class="m-0 text-light">

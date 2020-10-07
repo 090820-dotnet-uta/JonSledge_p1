@@ -5,8 +5,8 @@
   Layout = "~/Views/Shared/_LayoutOrder.cshtml";
 }
 
-<div class="container text-white">
-  <div class="row justify-content-center my-3">
+<div class="container text-white my-3">
+  <div class="row justify-content-center">
     <div class="col-sm-6 d-flex justify-content-center">
       @if ((string)ViewData["CurrentCustomer"] == "none" || ViewData["CurrentCustomer"] == null)
       {
@@ -32,7 +32,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content bg-dark">
         <div class="modal-header border-bottom border-secondary">
-          <h5 class="modal-title" id="staticBackdropLabel">Store Locations</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Customers</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="col d-flex align-items-center">
                       <h5 class="m-0 d-flex">
-                        @item.LastName
+                        @item.FirstName
                       </h5>
                     </div>
                   </div>
@@ -99,7 +99,7 @@
     {
       @foreach (var item in Model.Orders)
       {
-        <li class="list-group-item list-group-item-action list-group-item bg-dark border border-secondary my-1 hover-darker pointer">
+        <li class="list-group-item list-group-item-action list-group-item bg-dark border border-secondary my-1">
           <div class="row">
             <div class="col d-flex align-items-center">
               <h4 class="m-0 d-flex">

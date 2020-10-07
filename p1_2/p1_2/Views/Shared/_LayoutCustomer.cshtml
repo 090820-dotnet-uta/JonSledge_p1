@@ -8,13 +8,16 @@
   <h1 class="font-weight-light text-center text-light my-auto">Search Customers</h1>
   <div class="row justify-content-center">
     <div class="col-4 text-center d-flex justify-content-center">
-      <form method="post" class="form-signin mt-1" asp-controller="Customer" asp-action="DisplayCustomers">
+      <form method="post" class="form-signin d-inline-flex mt-1" asp-controller="Customer" asp-action="DisplayCustomers">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-          <input autocomplete="off" id="myInput" type="text" asp-for="@Model.Customer.FirstName" class="form-control text-center mt-3" placeholder="First Name" required autofocus>
+        <div class="form-group mx-1 my-2">
+          <input autocomplete="off" id="myInput" type="text" asp-for="@Model.Customer.FirstName" class="form-control text-center" placeholder="First Name" required autofocus>
           <span asp-validation-for="@Model.Customer.FirstName" class="text-danger"></span>
         </div>
-        <input type="submit" style="display:none;">
+        <div class="form-group mx-1 my-2">
+
+          <input type="submit" class="btn btn-success btn-sm py-2" value="Search">
+        </div>
       </form>
     </div>
   </div>

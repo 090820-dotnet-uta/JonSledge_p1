@@ -23,12 +23,18 @@
           </h4>
 
         </div>
+        <div class="col d-flex align-items-center">
+          <h4 class="m-0 d-flex">
+            <span class="badge badge-dark border border-dark shadow-lg">Total</span>
+          </h4>
+
+        </div>
       </div>
 
     </li>
     @foreach (var item in Model.Orders)
     {
-      <li class="list-group-item list-group-item-action list-group-item bg-dark border border-secondary shadow-lg my-1 hover-darker pointer">
+      <li class="list-group-item list-group-item-action list-group-item bg-dark border border-secondary shadow-lg my-1">
         <div class="row">
           <div class="col d-flex align-items-center">
             <h4 class="m-0 d-flex">
@@ -39,6 +45,11 @@
           <div class="col d-flex align-items-center">
             <h4 class="m-0 d-flex">
               <span class="badge badge-dark border border-secondary">@item.TimeOfOrder</span>
+            </h4>
+          </div>
+          <div class="col d-flex align-items-center">
+            <h4 class="m-0 d-flex">
+              <span class="badge badge-dark border border-secondary">$@item.Total</span>
             </h4>
           </div>
         </div>

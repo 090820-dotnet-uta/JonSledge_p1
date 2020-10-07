@@ -6,11 +6,11 @@
 
 <div class="container">
   <h1 class="text-center text-light display-4">
-    Product Details
+    Book Details
   </h1>
 
   <div class="jumbotron bg-dark border border-secondary rounded shadow py-3 text-center">
-    <img class="card-img-top-details" src="~/img/@(Model.ImgUrl).jpg" />
+    <img class="card-img-top-details" src="~/img/@(Model.ImgUrl).jpg" alt="Book Cover" />
     <h1 class="text-light">@Html.DisplayFor(model => model.Title)</h1>
     <h3 class="text-light">@Html.DisplayFor(model => model.Author)</h3>
     <p class="lead text-light"> @Html.DisplayFor(model => model.Description)</p>

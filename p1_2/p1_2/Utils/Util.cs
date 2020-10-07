@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using p1_2.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using p1_2.Models;
 
 namespace p1_2.Utils
 {
@@ -61,17 +60,5 @@ namespace p1_2.Utils
       return orderProducts;
     }
 
-    public static void Shuffle(List<string> l, int n)
-    {
-      Random r = new Random();
-
-      for (int i = n - 1; i > 1; i--)
-      {
-        int idx = r.Next(i + 1);
-        string val = l[idx];
-        l[idx] = l[i];
-        l[i] = val;
-      }
-    }
   }
 }

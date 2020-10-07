@@ -12,7 +12,7 @@
   <div class="row justify-content-center">
     @foreach (var item in Model)
     {
-      <div class="col-lg-6">
+      <div class="col-lg-6 px-1">
         <a class="a-none" asp-controller="Store" asp-action="StoreProducts" asp-route-id="@item.StoreId">
           <div class="card p-3 my-1 bg-dark border border-secondary rounded shadow text-center hover">
             <h4 class="text-light">@Html.DisplayFor(modelItem => item.State)</h4>

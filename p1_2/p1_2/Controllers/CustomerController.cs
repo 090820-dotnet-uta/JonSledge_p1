@@ -47,6 +47,7 @@ namespace p1_2.Controllers
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult SignupCustomer([Bind("FirstName,LastName,UserName,Password")] Customer customer)
     {
       if (!ModelState.IsValid)

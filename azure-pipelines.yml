@@ -29,8 +29,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'jonsledge39_JonSledge_p1'
     projectName: 'JonSledge_p1'
-    extraProperties: 
-      sonar.exclusions=**/obj/**,**/*.dll
+    extraProperties: 'sonar.cs.opencover.reportsPaths="$(Agent.TempDirectory)/**/coverage.opencover.xml"'
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -55,7 +54,7 @@ steps:
   inputs:
     command: test
     projects: '**/p1_2.Test.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
 
 - task: SonarCloudAnalyze@1
 
